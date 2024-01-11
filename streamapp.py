@@ -11,11 +11,25 @@ violence_data = pd.read_csv(r'C:\Users\ACER\Downloads\violent_data.csv')
 cepi_data = pd.read_csv(r"C:\Users\ACER\Downloads\cepi_data.csv")
 mental_health_data = pd.read_csv(r"C:\Users\ACER\Downloads\mental_health_data.csv")
 
+# Creative Header
+st.markdown(
+    """
+    # 🌈 Explore Social and Environmental Data in India 🌏
+
+    Welcome to the Data Exploration App! This app allows you to dive into various aspects of India's social and environmental landscape.
+
+    Select different options from the sidebar to visualize data on poverty, violence, environmental pollution, and mental health.
+
+    Have a great exploration journey! 🚀
+    """
+)
+
+
 # Sidebar for user input
 st.sidebar.title('Explore Social and Environmental Data in India')
 
 # Select data to display
-selected_data = st.sidebar.multiselect('Select Data:', ['Poverty', 'Violence', 'Environmental Pollution', 'Mental Health'])
+selected_data = st.sidebar.multiselect('Select Data:', ['Poverty', 'Violence', 'Environmental Pollution', 'Mental Health','The State of Mental and Emotional Wellbeing in India'])
 
 # Display selected data
 if 'Poverty' in selected_data:
@@ -164,3 +178,35 @@ if 'Mental Health' in selected_data:
             ax.set_xlabel('Year')
             ax.set_ylabel(feature)
             st.pyplot(fig)
+
+# Display selected data
+if  'The State of Mental and Emotional Wellbeing in India' in selected_data:
+    # Display relevant output about the state of mental and emotional wellbeing
+    st.header('State of Mental and Emotional Wellbeing in India')
+    # Analyze mental health data
+    total_convicts = mental_health_data['Total Convicts'].sum()
+    total_under_trial = mental_health_data['Total Under trial'].sum()
+    total_detenues = mental_health_data['Total Detenues'].sum()
+
+    st.write(f'Total Convicts: {total_convicts}')
+    st.write(f'Total Under Trial: {total_under_trial}')
+    st.write(f'Total Detenues: {total_detenues}')
+
+    # Generate a bar graph for the state of male or female using features of mental health dataset
+    st.header('Bar Graph: State of Male or Female in Mental Health Data')
+
+    # Sidebar for user input
+    st.sidebar.title('Explore Mental Health Data in India')
+
+    # Select gender for visualization
+    selected_gender = st.sidebar.selectbox('Select Gender:', ['Male', 'Female'])
+
+    # Display barplot for the selected gender from mental health data
+    fig, ax = plt.subplots(figsize=(12, 8))
+    sns.barplot(x='YEAR', y=f'{selected_gender} Convicts', hue='STATE/UT', data=mental_health_data, ax=ax)
+    ax.set_xticks(range(len(mental_health_data['YEAR'].unique())))  # Set ticks first
+    ax.set_xticklabels(mental_health_data['YEAR'].unique(), rotation=45, ha='right')  # Rotate x-axis labels for better visibility
+    ax.set_title(f'State of {selected_gender} in Mental Health Data across Different States/UTs over the Years')
+    ax.set_xlabel('Year')
+    ax.set_ylabel(f'{selected_gender} Convicts')
+    st.pyplot(fig)
