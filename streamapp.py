@@ -38,6 +38,7 @@ if 'Poverty' in selected_data:
 
     fig, ax = plt.subplots(figsize=(12, 8))
     sns.barplot(x='State', y='Total - Percentage of Persons', data=poverty_data, ax=ax)
+    ax.set_xticks(ax.get_xticks())
     ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')  # Rotate x-axis labels for better visibility
     ax.set_title('Total Percentage of Persons Below Poverty Line in Each State')
     ax.set_xlabel('State')
@@ -54,6 +55,7 @@ if 'Poverty' in selected_data:
 
     for i, feature in enumerate(features):
         sns.barplot(x='State', y=feature, data=poverty_data, ax=axes[i])
+        axes[i].set_xticks(axes[i].get_xticks())
         axes[i].set_xticklabels(axes[i].get_xticklabels(), rotation=45, ha='right')
         axes[i].set_title(f'{feature} in Each State')
         axes[i].set_xlabel('State')
@@ -80,6 +82,7 @@ if 'Violence' in selected_data:
 
     fig, ax = plt.subplots(figsize=(12, 8))
     sns.barplot(x='Type-region', y=selected_feature, data=cleaned_data, ax=ax)
+    ax.set_xticks(ax.get_xticks())
     ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')  # Rotate x-axis labels for better visibility
     ax.set_title(f'{selected_feature} across Different Regions (Cleaned Data)')
     ax.set_xlabel('Type-region')
